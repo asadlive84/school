@@ -1,0 +1,133 @@
+syntax = "proto3";
+
+package student;
+
+option go_package="./pb/student";
+import "google/protobuf/timestamp.proto";
+
+service StudentService {
+  rpc Insert(InsertRequest) returns (InsertResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  // rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+  rpc CheckStudent(CheckStudentRequest)returns(CheckStudentResponse){}
+  rpc StudentList(StudentListRequest)returns(StudentListResponse){}
+  rpc GetClassList(GetClassListRequest)returns(GetClassListResponse){}
+  rpc InsertAcademicSession(InsertAcademicSessionRequest)returns(InsertAcademicSessionResponse){}
+  rpc GetStudentListBySession(GetStudentListBySessionRequest)returns(GetStudentListBySessionResponse){}
+}
+
+message GetStudentListBySessionRequest{
+  int32 sessionId = 1;
+
+}
+message GetStudentListBySessionResponse{
+
+  repeated Student student =1;
+
+}
+message InsertAcademicSessionRequest{
+
+  string studentId = 1;
+  int32 sessionId = 2;
+
+}
+message InsertAcademicSessionResponse{
+
+}
+message GetClassListRequest{
+
+}
+
+message GetClassListResponse{
+  repeated SessionClass session =1;
+}
+
+
+
+message SessionClass{
+  int32 sessionId = 1;
+  string class = 2;
+  string year = 3;
+}
+
+
+message StudentListRequest{
+
+}
+
+message StudentListResponse{
+  repeated Student student =1;
+}
+
+
+message InsertRequest{
+  Student student =1;
+}
+message CheckStudentRequest{
+    string userID =1;
+}
+
+message CheckStudentResponse{
+    int64 status = 1;
+    string error = 2;
+    string message = 3;
+    Student student = 4;
+}
+
+// Insert student
+
+message Student {
+  string id = 1;
+  string std_id = 2;
+  string name = 3;
+  string name_bn = 4;
+  string fathers_name = 5;
+  string mothers_name = 6;
+  google.protobuf.Timestamp dob = 7;
+  string gender = 8;
+  string blood_group = 9;
+  string mobile_number = 10;
+  string session =11;
+  string class_name = 12;
+  string class_section = 13;
+  string class_group = 14;
+  string class_roll = 15;
+  string address = 16;
+  string religion = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+  string created_by = 20;
+  string updated_by =21;
+  string email =22;
+}
+
+message InsertResponse {
+  int64 status = 1;
+  string error = 2;
+  string stdId = 3;
+}
+
+// Login
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string phone = 3;
+
+}
+
+message LoginResponse {
+  int64 status = 1;
+  string error = 2;
+  string token = 3;
+}
+
+// Validate
+
+// message ValidateRequest { string token = 1; }
+
+// message ValidateResponse {
+//   int64 status = 1;
+//   string error = 2;
+//   int64 userId = 3;
+// }

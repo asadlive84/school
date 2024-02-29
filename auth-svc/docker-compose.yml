@@ -1,0 +1,65 @@
+services:
+  database:
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - ./init-script.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5445:5432
+    environment:
+      - POSTGRES_DB=auth_svc
+      - POSTGRES_USER=asad
+      - POSTGRES_PASSWORD=password
+    networks:
+      - backendnet
+
+  authsvc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 50051:50051
+    networks:
+      - backendnet
+    depends_on:
+      - database
+
+  productsvc:
+    build:
+      context: ../product-svc
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 50052:50052
+    networks:
+      - backendnet
+    depends_on:
+      - database
+      - authsvc
+
+  apigateway:
+    build:
+      context: ../api-gateway
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - backendnet
+    depends_on:
+      - database
+      - authsvc
+      - productsvc
+    
+
+
+volumes:
+  postgres-data:
+networks:
+  backendnet:
+    driver: bridge
+
+
+    
