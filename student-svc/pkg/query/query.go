@@ -47,6 +47,11 @@ type Student struct {
 	UpdatedAt    sql.NullTime `db:"updated_at"`
 	CreatedBy    string       `db:"created_by"`
 	UpdatedBy    string       `db:"updated_by"`
+
+	VillageOrRoad string `db:"village_or_road"`
+	Union         string `db:"union"`
+	Upzilla       string `db:"upzilla"`
+	District      string `db:"district"`
 }
 
 type Class struct {
@@ -60,6 +65,45 @@ type AcademicSession struct {
 	SessionId int32  `db:"session_id"`
 }
 
+// District struct represents the District table.
+type District struct {
+	Id   int32  `db:"id"`
+	Name string `db:"name"`
+}
+
+// Upazilla struct represents the Upazilla table.
+type Upazilla struct {
+	Id         int32  `db:"id"`
+	Name       string `db:"name"`
+	DistrictId int32  `db:"district_id"`
+}
+
+// Union struct represents the Union table.
+type UnionInfo struct {
+	Id         int32  `db:"id"`
+	Name       string `db:"name"`
+	UpazillaId int32  `db:"upazilla_id"`
+}
+
+// VillageOrRoad struct represents the VillageOrRoad table.
+type VillageOrRoad struct {
+	Id      int32  `db:"id"`
+	Name    string `db:"name"`
+	UnionId int32  `db:"union_id"`
+}
+
+type Address struct {
+	Id              int32  `db:"id"`
+	Info            string `db:"info"`
+	StudentId       string `db:"student_id"`
+	VillageOrRoadId int32  `db:"village_or_road_id"`
+	UnionID         int32  `db:"union_id"`
+	UpazillaId      int32  `db:"upazilla_id"`
+	DistrictId      int32  `db:"district_id"`
+	IsPresent       bool   `db:"is_present"`
+	IsPermanent     bool   `db:"is_permanent"`
+}
+
 type Query interface {
 	InsertUser(u User) error
 	InsertStudent(u Student) (string, error)
@@ -70,4 +114,26 @@ type Query interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserByPhone(phone string) (*User, error)
 	GetUserByID(userID string) (User, error)
+
+	GetStudentProfileById(studentId string) (Student, error)
+
+	InsertAddress(u Address) (int32, error)
+	InsertDistrict(u *District) (int32, error)
+	InsertUpazilla(u *Upazilla) (int32, error)
+	InsertUnion(u *UnionInfo) (int32, error)
+	InsertVillageOrRoad(u *VillageOrRoad) (int32, error)
+
+	GetAddressByStudentID(studentID string) (Address, error)
+	GetDistrictByName(districtName string) (District, error)
+	GetUpazillaByName(upazillaName string) (Upazilla, error)
+	GetUnionByName(unionName string) (UnionInfo, error)
+	GetVillageOrRoadByName(villageOrRoadName string) (VillageOrRoad, error)
+	GetDistrictByID(districtID int32) (District, error)
+	GetUpazillaByID(upazillaID int32) (Upazilla, error)
+	GetUnionByID(unionID int32) (UnionInfo, error)
+	GetVillageOrRoadByID(villageOrRoadID int32) (VillageOrRoad, error)
+	GetUpazillasByDistrictID(districtID int32) ([]Upazilla, error)
+	GetVillagesOrRoadsByUnionID(unionID int32) ([]VillageOrRoad, error)
+	GetUnionsByUpazillaID(upazillaID int32) ([]UnionInfo, error)
+	AddressListByStudentID(studentID string) ([]*Address, error)
 }

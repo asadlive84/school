@@ -18,6 +18,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	routes.POST("/uploadfile", svc.UploadFile)
 	routes.GET("/list", svc.StudentList)
 	routes.GET("/clslist", svc.GetClassList)
+	routes.GET("/profile/:id", svc.GetStudentProfileById)
 	routes.POST("/stdlistbysessionid", svc.GetStudentListBySession)
 
 	return svc
@@ -43,4 +44,8 @@ func (svc *ServiceClient) GetClassList(ctx *gin.Context) {
 }
 func (svc *ServiceClient) GetStudentListBySession(ctx *gin.Context) {
 	routes.GetStudentListBySession(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) GetStudentProfileById(ctx *gin.Context) {
+	routes.GetStudentProfileById(ctx, svc.Client)
 }

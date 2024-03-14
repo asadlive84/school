@@ -217,3 +217,55 @@ func (q *QueryInit) GetUserByID(userID string) (User, error) {
 	}
 	return user, nil
 }
+
+func (q *QueryInit) GetStudentProfileById(studentId string) (Student, error) {
+	var student Student
+
+	qc := `SELECT
+	student.id,
+    student.std_id,
+    student.name,
+    student.email,
+    student.name_bn,
+    student.fathers_name,
+    student.mothers_name,
+    student.dob,
+    student.gender,
+    student.blood_group,
+    student.mobile_number,
+    student.session,
+    student.class_name,
+    student.class_section,
+    student.address,
+    student.religion,
+    student.is_active,
+    student.created_at,
+    student.updated_at,
+    student.created_by,
+    student.updated_by,
+    
+    vor.name as village_or_road, 
+	ui.name as union, 
+	u.name as upzilla, 
+	d.name as district
+    
+	FROM
+		student 
+	left join address a on a.student_id  = student.id  
+	left join village_or_road vor ON
+	a.village_or_road_id =vor.id 
+	left join union_info ui on ui.id=a.union_id 
+	left join upazilla u on u.id = a.upazilla_id 
+	left join district d on d.id =a.district_id 
+
+	where student.id=$1;`
+
+	if err := q.Db.Get(&student, qc, studentId); err != nil {
+		if err == sql.ErrNoRows {
+			return student, NotFound
+		}
+		return student, err
+	}
+
+	return student, nil
+}

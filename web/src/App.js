@@ -4,14 +4,16 @@ import FileUploadForm from './components/studentUpload';
 import Home from './components/Home';
 import StudentList from './components/StudentList';
 import StudentListBySessionId from './components/StudentListBySessionId';
+import StudentProfile from './components/StudentProfile';
 import Layout from './components/Layout';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route exact path="/" element={<Layout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/student/:uuid/profile" element={ <StudentProfile/> } />
           <Route path="/students" element={<StudentList />} />
           <Route path="/stdlistsessionid" element={<StudentListBySessionId />} />
           <Route path="/upload" element={<FileUploadForm />} />

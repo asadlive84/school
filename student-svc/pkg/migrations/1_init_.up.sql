@@ -4,18 +4,31 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
+CREATE TABLE IF NOT EXISTS academic_class (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR (300) NOT NULL,
+    numeric_name VARCHAR (10) NOT NULL,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp NULL,
+    created_by VARCHAR (300) NOT NULL DEFAULT '',
+    updated_by VARCHAR (300) NOT NULL DEFAULT ''
+    
+);
+
+
+
 CREATE TABLE IF NOT EXISTS academic_session (
     session_id SERIAL PRIMARY KEY,
     year INTEGER,
-    class VARCHAR(50)
+    academic_class_id int NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT FALSE,
+    start_date timestamp NULL,
+    end_date timestamp NULL,
+    created_by VARCHAR (300) NOT NULL DEFAULT '',
+    updated_by VARCHAR (300) NOT NULL DEFAULT '',
+    FOREIGN KEY (academic_class_id) REFERENCES academic_class(id) ON DELETE CASCADE
 );
--- Sample insert queries
-INSERT INTO academic_session (year, class) VALUES (2024, 'SIX');
-INSERT INTO academic_session (year, class) VALUES (2024, 'SEVEN');
-INSERT INTO academic_session (year, class) VALUES (2024, 'EIGHT');
-INSERT INTO academic_session (year, class) VALUES (2024, 'NINE');
-INSERT INTO academic_session (year, class) VALUES (2024, 'TEN');
-INSERT INTO academic_session (year, class) VALUES (2023, 'TEN');
+
 
 
 CREATE TABLE IF NOT EXISTS student(

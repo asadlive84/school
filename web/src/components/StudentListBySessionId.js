@@ -136,7 +136,9 @@ const calculateAge = (dob) => {
               {studentList != null && studentList.map((student, index) => (
                 <tr key={student.id}>
                   <td style={{ padding: '12px', border: '1px solid #ddd' }}>{index + 1}</td>
-                  <td style={{ padding: '12px', border: '1px solid #ddd' }}>{student.name}</td>
+                  <td style={{ padding: '12px', border: '1px solid #ddd' }}>
+                     <a href={`student/${student.id}/profile`}>{student.name}</a>
+                    </td>
                   <td style={{ padding: '12px', border: '1px solid #ddd' }}>{student.std_id}</td>
                   <td style={{ padding: '12px', border: '1px solid #ddd' }}>{student.name_bn}</td>
                   <td style={{ padding: '12px', border: '1px solid #ddd' }}>{student.fathers_name}</td>
