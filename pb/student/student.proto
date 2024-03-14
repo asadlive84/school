@@ -14,6 +14,35 @@ service StudentService {
   rpc GetClassList(GetClassListRequest)returns(GetClassListResponse){}
   rpc InsertAcademicSession(InsertAcademicSessionRequest)returns(InsertAcademicSessionResponse){}
   rpc GetStudentListBySession(GetStudentListBySessionRequest)returns(GetStudentListBySessionResponse){}
+
+
+
+  rpc InsertAddress(InsertAddressRequest)returns(InsertAddressResponse){}
+
+  rpc GetStudentProfileById(GetStudentProfileByIdRequest)returns(GetStudentProfileByIdResponse){}
+
+}
+
+message GetStudentProfileByIdRequest{
+  string studentId = 1;
+}
+
+message GetStudentProfileByIdResponse{
+  Student student = 1;
+  string village_or_road = 2;
+  string union = 3;
+  string upzilla = 4;
+  string district = 5;
+}
+
+message InsertAddressRequest{
+  Address Address = 1;
+
+}
+
+message InsertAddressResponse{
+  int32 id = 1;
+
 }
 
 message GetStudentListBySessionRequest{
@@ -62,7 +91,10 @@ message StudentListResponse{
 
 message InsertRequest{
   Student student =1;
+  
 }
+
+
 message CheckStudentRequest{
     string userID =1;
 }
@@ -99,7 +131,49 @@ message Student {
   string created_by = 20;
   string updated_by =21;
   string email =22;
+  string district = 23;
+  string upzilla = 24;
+  string unionName = 25;
+  string village_or_road=26;
 }
+
+
+message Address {
+  int32 id = 1;
+  string info = 2;
+  string student_id = 3;
+  int32 village_or_road_id = 4;
+  int32 union_id = 5;
+  int32 upazilla_id = 6;
+  int32 district_id = 7;
+  bool is_present = 8;
+  bool is_permanent = 9;
+}
+
+
+message District {
+    int32 id = 1;
+    string name = 2;
+}
+
+message Upazilla {
+    int32 id = 1;
+    string name = 2;
+    int32 district_id = 3;
+}
+
+message UnionInfo {
+    int32 id = 1;
+    string name = 2;
+    int32 upazilla_id = 3;
+}
+
+message VillageOrRoad {
+    int32 id = 1;
+    string name = 2;
+    int32 union_id = 3;
+}
+
 
 message InsertResponse {
   int64 status = 1;
@@ -122,12 +196,3 @@ message LoginResponse {
   string token = 3;
 }
 
-// Validate
-
-// message ValidateRequest { string token = 1; }
-
-// message ValidateResponse {
-//   int64 status = 1;
-//   string error = 2;
-//   int64 userId = 3;
-// }

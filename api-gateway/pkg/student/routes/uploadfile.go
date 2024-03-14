@@ -140,24 +140,30 @@ func processData(sessionYear string, headers []string, values [][]string, d pb.S
 			religion = "N/A"
 		}
 
+		addressInfo := strings.Split(row[14], ",")
+
 		std := &pb.Student{
-			Id:           "",
-			StdId:        row[0],
-			Name:         row[1],
-			NameBn:       row[2],
-			FathersName:  row[3],
-			MothersName:  row[4],
-			Dob:          protoTimestamp,
-			Gender:       gender,
-			BloodGroup:   row[7],
-			MobileNumber: row[8],
-			Session:      row[9],
-			ClassName:    row[10],
-			ClassSection: "",
-			ClassGroup:   "",
-			ClassRoll:    "",
-			Address:      row[14],
-			Religion:     religion,
+			Id:            "",
+			StdId:         strings.TrimRight(strings.TrimLeft(row[0], " "), " "),
+			Name:          strings.TrimRight(strings.TrimLeft(row[1], " "), " "),
+			NameBn:        strings.TrimRight(strings.TrimLeft(row[2], " "), " "),
+			FathersName:   strings.TrimRight(strings.TrimLeft(row[3], " "), " "),
+			MothersName:   strings.TrimRight(strings.TrimLeft(row[4], " "), " "),
+			Dob:           protoTimestamp,
+			Gender:        gender,
+			BloodGroup:    strings.TrimRight(strings.TrimLeft(row[7], " "), " "),
+			MobileNumber:  strings.TrimRight(strings.TrimLeft(row[8], " "), " "),
+			Session:       strings.TrimRight(strings.TrimLeft(row[9], " "), " "),
+			ClassName:     strings.TrimRight(strings.TrimLeft(row[10], " "), " "),
+			ClassSection:  "",
+			ClassGroup:    "",
+			ClassRoll:     "",
+			Address:       strings.TrimRight(strings.TrimLeft(row[14], " "), " "),
+			Religion:      religion,
+			District:      strings.TrimRight(strings.TrimLeft(addressInfo[3], " "), " "),
+			Upzilla:       strings.TrimRight(strings.TrimLeft(addressInfo[2], " "), " "),
+			UnionName:     strings.TrimRight(strings.TrimLeft(addressInfo[1], " "), " "),
+			VillageOrRoad: strings.TrimRight(strings.TrimLeft(addressInfo[0], " "), " "),
 		}
 
 		ctx := context.Background()

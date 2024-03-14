@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Example student data (replace with your actual data)
+        var students = [
+            { name: 'Student 1', lat: 51.5, lng: -0.09 },
+            { name: 'Student 2', lat: 51.51, lng: -0.1 },
+            // Add more student data as needed
+        ];
+
+        // Add markers for each student
+        students.forEach(function(student) {
+            L.marker([student.lat, student.lng]).addTo(map)
+                .bindPopup(student.name);
+        });
+    </script>
+</body>
+</html>
