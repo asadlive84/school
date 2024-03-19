@@ -52,6 +52,8 @@ type Student struct {
 	Union         string `db:"union"`
 	Upzilla       string `db:"upzilla"`
 	District      string `db:"district"`
+
+	SessionName string `db:"session_name"`
 }
 
 type Class struct {
@@ -67,29 +69,45 @@ type AcademicSession struct {
 
 // District struct represents the District table.
 type District struct {
-	Id   int32  `db:"id"`
-	Name string `db:"name"`
+	Id        int32        `db:"id"`
+	Name      string       `db:"name"`
+	CreatedAt time.Time    `db:"created_at"`
+	UpdatedAt sql.NullTime `db:"updated_at"`
+	CreatedBy string       `db:"created_by"`
+	UpdatedBy string       `db:"updated_by"`
 }
 
 // Upazilla struct represents the Upazilla table.
 type Upazilla struct {
-	Id         int32  `db:"id"`
-	Name       string `db:"name"`
-	DistrictId int32  `db:"district_id"`
+	Id         int32        `db:"id"`
+	Name       string       `db:"name"`
+	DistrictId int32        `db:"district_id"`
+	CreatedAt  time.Time    `db:"created_at"`
+	UpdatedAt  sql.NullTime `db:"updated_at"`
+	CreatedBy  string       `db:"created_by"`
+	UpdatedBy  string       `db:"updated_by"`
 }
 
 // Union struct represents the Union table.
 type UnionInfo struct {
-	Id         int32  `db:"id"`
-	Name       string `db:"name"`
-	UpazillaId int32  `db:"upazilla_id"`
+	Id         int32        `db:"id"`
+	Name       string       `db:"name"`
+	UpazillaId int32        `db:"upazilla_id"`
+	CreatedAt  time.Time    `db:"created_at"`
+	UpdatedAt  sql.NullTime `db:"updated_at"`
+	CreatedBy  string       `db:"created_by"`
+	UpdatedBy  string       `db:"updated_by"`
 }
 
 // VillageOrRoad struct represents the VillageOrRoad table.
 type VillageOrRoad struct {
-	Id      int32  `db:"id"`
-	Name    string `db:"name"`
-	UnionId int32  `db:"union_id"`
+	Id        int32        `db:"id"`
+	Name      string       `db:"name"`
+	UnionId   int32        `db:"union_id"`
+	CreatedAt time.Time    `db:"created_at"`
+	UpdatedAt sql.NullTime `db:"updated_at"`
+	CreatedBy string       `db:"created_by"`
+	UpdatedBy string       `db:"updated_by"`
 }
 
 type Address struct {
@@ -102,6 +120,14 @@ type Address struct {
 	DistrictId      int32  `db:"district_id"`
 	IsPresent       bool   `db:"is_present"`
 	IsPermanent     bool   `db:"is_permanent"`
+}
+
+type SearchData struct {
+	District     int32   `json:"district"`
+	Upazillas    []int32 `json:"upazillas"`
+	Unions       []int32 `json:"unions"`
+	VillageRoads []int32 `json:"villageRoads"`
+	SessionId    []int32 `json:"sessionId"`
 }
 
 type Query interface {
@@ -136,4 +162,8 @@ type Query interface {
 	GetVillagesOrRoadsByUnionID(unionID int32) ([]VillageOrRoad, error)
 	GetUnionsByUpazillaID(upazillaID int32) ([]UnionInfo, error)
 	AddressListByStudentID(studentID string) ([]*Address, error)
+
+	GetDistrictList() ([]*District, error)
+	SearchStudent(SearchData) ([]*Student, error)
+	// GetDistrictList()([]*District, error)
 }

@@ -2,7 +2,6 @@ package query
 
 import "database/sql"
 
-
 func (q *QueryInit) GetAddressByStudentID(studentID string) (Address, error) {
 	var address Address
 	const query = `SELECT * FROM address WHERE student_id=$1`
@@ -163,4 +162,16 @@ func (q *QueryInit) AddressListByStudentID(studentID string) ([]*Address, error)
 		return nil, err
 	}
 	return addresses, nil
+}
+
+func (q *QueryInit) GetDistrictList() ([]*District, error) {
+	var districts []*District
+	const query = `SELECT * FROM district order by name ASC`
+	if err := q.Db.Select(&districts, query); err != nil {
+		if err == sql.ErrNoRows {
+			return districts, NotFound
+		}
+		return districts, err
+	}
+	return districts, nil
 }

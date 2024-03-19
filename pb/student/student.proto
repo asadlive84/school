@@ -21,7 +21,61 @@ service StudentService {
 
   rpc GetStudentProfileById(GetStudentProfileByIdRequest)returns(GetStudentProfileByIdResponse){}
 
+
+  rpc GetDistrictList(GetDistrictListRequest)returns(GetDistrictListResponse){}
+  rpc GetUpazillaListByDistrictId(GetUpazillaListByDistrictIdRequest)returns(GetUpazillaListByDistrictIdResponse){}
+  rpc GetUnionListByUpazillaId(GetUnionListByUpazillaIdRequest)returns(GetUnionListByUpazillaIdResponse){}
+  rpc GetVillageOrRoadListByUnionId(GetVillageOrRoadListByUnionIdRequest)returns(GetVillageOrRoadListByUnionIdResponse){}
+
+
+  rpc SearchStudent(SearchStudentRequest)returns(SearchStudentResponse){}
+
 }
+
+message SearchStudentRequest{
+  int32 districtId = 1;
+  repeated int32 upazillaId = 2;
+  repeated int32 unonId = 3;
+  repeated int32 villageOrRoadId = 4;
+  repeated int32 sessionId = 5;
+}
+
+message SearchStudentResponse{
+  repeated Student student = 1;
+}
+
+message GetVillageOrRoadListByUnionIdRequest{
+  string uiononId = 1;
+}
+
+message GetVillageOrRoadListByUnionIdResponse{
+  repeated VillageOrRoad villageOrRoad = 1;
+}
+
+message GetUnionListByUpazillaIdRequest{
+  string upazillaId = 1;
+}
+
+message GetUnionListByUpazillaIdResponse{
+  repeated UnionInfo unionInfo = 1;
+}
+
+message GetUpazillaListByDistrictIdRequest{
+  string dictrictId = 1;
+}
+
+message GetUpazillaListByDistrictIdResponse{
+  repeated Upazilla upazilla = 1;
+}
+
+message GetDistrictListRequest{
+
+}
+
+message GetDistrictListResponse{
+  repeated District district = 1;
+}
+
 
 message GetStudentProfileByIdRequest{
   string studentId = 1;

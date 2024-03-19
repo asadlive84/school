@@ -21,6 +21,13 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	routes.GET("/profile/:id", svc.GetStudentProfileById)
 	routes.POST("/stdlistbysessionid", svc.GetStudentListBySession)
 
+	routes.GET("/get-district-list", svc.GetDistrict)
+	routes.GET("/get-upazilla-list/:id", svc.GetUpazillaListByDistrictId)
+	routes.GET("/get-union-list/:id", svc.GetUnionListByUpazillaId)
+	routes.GET("/get-village-or-road-list/:id", svc.GetVillageOrRoadListByUnionId)
+
+	routes.POST("/search", svc.SearchStudent)
+
 	return svc
 
 }
@@ -48,4 +55,19 @@ func (svc *ServiceClient) GetStudentListBySession(ctx *gin.Context) {
 
 func (svc *ServiceClient) GetStudentProfileById(ctx *gin.Context) {
 	routes.GetStudentProfileById(ctx, svc.Client)
+}
+func (svc *ServiceClient) GetDistrict(ctx *gin.Context) {
+	routes.GetDistrict(ctx, svc.Client)
+}
+func (svc *ServiceClient) GetUpazillaListByDistrictId(ctx *gin.Context) {
+	routes.GetUpazillaListByDistrictId(ctx, svc.Client)
+}
+func (svc *ServiceClient) GetUnionListByUpazillaId(ctx *gin.Context) {
+	routes.GetUnionListByUpazillaId(ctx, svc.Client)
+}
+func (svc *ServiceClient) GetVillageOrRoadListByUnionId(ctx *gin.Context) {
+	routes.GetVillageOrRoadListByUnionId(ctx, svc.Client)
+}
+func (svc *ServiceClient) SearchStudent(ctx *gin.Context) {
+	routes.SearchStudent(ctx, svc.Client)
 }

@@ -6,6 +6,7 @@ import StudentList from './components/StudentList';
 import StudentListBySessionId from './components/StudentListBySessionId';
 import StudentProfile from './components/StudentProfile';
 import Layout from './components/Layout';
+import ParentComponent from './components/ParentComponent';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/students" element={<StudentList />} />
           <Route path="/stdlistsessionid" element={<StudentListBySessionId />} />
           <Route path="/upload" element={<FileUploadForm />} />
+          <Route path="/search" element={<ParentComponent />} />
         </Route>
       </Routes>
     </BrowserRouter>
