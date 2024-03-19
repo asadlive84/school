@@ -19,15 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StudentService_Insert_FullMethodName                  = "/student.StudentService/Insert"
-	StudentService_Login_FullMethodName                   = "/student.StudentService/Login"
-	StudentService_CheckStudent_FullMethodName            = "/student.StudentService/CheckStudent"
-	StudentService_StudentList_FullMethodName             = "/student.StudentService/StudentList"
-	StudentService_GetClassList_FullMethodName            = "/student.StudentService/GetClassList"
-	StudentService_InsertAcademicSession_FullMethodName   = "/student.StudentService/InsertAcademicSession"
-	StudentService_GetStudentListBySession_FullMethodName = "/student.StudentService/GetStudentListBySession"
-	StudentService_InsertAddress_FullMethodName           = "/student.StudentService/InsertAddress"
-	StudentService_GetStudentProfileById_FullMethodName   = "/student.StudentService/GetStudentProfileById"
+	StudentService_Insert_FullMethodName                        = "/student.StudentService/Insert"
+	StudentService_Login_FullMethodName                         = "/student.StudentService/Login"
+	StudentService_CheckStudent_FullMethodName                  = "/student.StudentService/CheckStudent"
+	StudentService_StudentList_FullMethodName                   = "/student.StudentService/StudentList"
+	StudentService_GetClassList_FullMethodName                  = "/student.StudentService/GetClassList"
+	StudentService_InsertAcademicSession_FullMethodName         = "/student.StudentService/InsertAcademicSession"
+	StudentService_GetStudentListBySession_FullMethodName       = "/student.StudentService/GetStudentListBySession"
+	StudentService_InsertAddress_FullMethodName                 = "/student.StudentService/InsertAddress"
+	StudentService_GetStudentProfileById_FullMethodName         = "/student.StudentService/GetStudentProfileById"
+	StudentService_GetDistrictList_FullMethodName               = "/student.StudentService/GetDistrictList"
+	StudentService_GetUpazillaListByDistrictId_FullMethodName   = "/student.StudentService/GetUpazillaListByDistrictId"
+	StudentService_GetUnionListByUpazillaId_FullMethodName      = "/student.StudentService/GetUnionListByUpazillaId"
+	StudentService_GetVillageOrRoadListByUnionId_FullMethodName = "/student.StudentService/GetVillageOrRoadListByUnionId"
+	StudentService_SearchStudent_FullMethodName                 = "/student.StudentService/SearchStudent"
 )
 
 // StudentServiceClient is the client API for StudentService service.
@@ -44,6 +49,11 @@ type StudentServiceClient interface {
 	GetStudentListBySession(ctx context.Context, in *GetStudentListBySessionRequest, opts ...grpc.CallOption) (*GetStudentListBySessionResponse, error)
 	InsertAddress(ctx context.Context, in *InsertAddressRequest, opts ...grpc.CallOption) (*InsertAddressResponse, error)
 	GetStudentProfileById(ctx context.Context, in *GetStudentProfileByIdRequest, opts ...grpc.CallOption) (*GetStudentProfileByIdResponse, error)
+	GetDistrictList(ctx context.Context, in *GetDistrictListRequest, opts ...grpc.CallOption) (*GetDistrictListResponse, error)
+	GetUpazillaListByDistrictId(ctx context.Context, in *GetUpazillaListByDistrictIdRequest, opts ...grpc.CallOption) (*GetUpazillaListByDistrictIdResponse, error)
+	GetUnionListByUpazillaId(ctx context.Context, in *GetUnionListByUpazillaIdRequest, opts ...grpc.CallOption) (*GetUnionListByUpazillaIdResponse, error)
+	GetVillageOrRoadListByUnionId(ctx context.Context, in *GetVillageOrRoadListByUnionIdRequest, opts ...grpc.CallOption) (*GetVillageOrRoadListByUnionIdResponse, error)
+	SearchStudent(ctx context.Context, in *SearchStudentRequest, opts ...grpc.CallOption) (*SearchStudentResponse, error)
 }
 
 type studentServiceClient struct {
@@ -135,6 +145,51 @@ func (c *studentServiceClient) GetStudentProfileById(ctx context.Context, in *Ge
 	return out, nil
 }
 
+func (c *studentServiceClient) GetDistrictList(ctx context.Context, in *GetDistrictListRequest, opts ...grpc.CallOption) (*GetDistrictListResponse, error) {
+	out := new(GetDistrictListResponse)
+	err := c.cc.Invoke(ctx, StudentService_GetDistrictList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studentServiceClient) GetUpazillaListByDistrictId(ctx context.Context, in *GetUpazillaListByDistrictIdRequest, opts ...grpc.CallOption) (*GetUpazillaListByDistrictIdResponse, error) {
+	out := new(GetUpazillaListByDistrictIdResponse)
+	err := c.cc.Invoke(ctx, StudentService_GetUpazillaListByDistrictId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studentServiceClient) GetUnionListByUpazillaId(ctx context.Context, in *GetUnionListByUpazillaIdRequest, opts ...grpc.CallOption) (*GetUnionListByUpazillaIdResponse, error) {
+	out := new(GetUnionListByUpazillaIdResponse)
+	err := c.cc.Invoke(ctx, StudentService_GetUnionListByUpazillaId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studentServiceClient) GetVillageOrRoadListByUnionId(ctx context.Context, in *GetVillageOrRoadListByUnionIdRequest, opts ...grpc.CallOption) (*GetVillageOrRoadListByUnionIdResponse, error) {
+	out := new(GetVillageOrRoadListByUnionIdResponse)
+	err := c.cc.Invoke(ctx, StudentService_GetVillageOrRoadListByUnionId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studentServiceClient) SearchStudent(ctx context.Context, in *SearchStudentRequest, opts ...grpc.CallOption) (*SearchStudentResponse, error) {
+	out := new(SearchStudentResponse)
+	err := c.cc.Invoke(ctx, StudentService_SearchStudent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StudentServiceServer is the server API for StudentService service.
 // All implementations must embed UnimplementedStudentServiceServer
 // for forward compatibility
@@ -149,6 +204,11 @@ type StudentServiceServer interface {
 	GetStudentListBySession(context.Context, *GetStudentListBySessionRequest) (*GetStudentListBySessionResponse, error)
 	InsertAddress(context.Context, *InsertAddressRequest) (*InsertAddressResponse, error)
 	GetStudentProfileById(context.Context, *GetStudentProfileByIdRequest) (*GetStudentProfileByIdResponse, error)
+	GetDistrictList(context.Context, *GetDistrictListRequest) (*GetDistrictListResponse, error)
+	GetUpazillaListByDistrictId(context.Context, *GetUpazillaListByDistrictIdRequest) (*GetUpazillaListByDistrictIdResponse, error)
+	GetUnionListByUpazillaId(context.Context, *GetUnionListByUpazillaIdRequest) (*GetUnionListByUpazillaIdResponse, error)
+	GetVillageOrRoadListByUnionId(context.Context, *GetVillageOrRoadListByUnionIdRequest) (*GetVillageOrRoadListByUnionIdResponse, error)
+	SearchStudent(context.Context, *SearchStudentRequest) (*SearchStudentResponse, error)
 	mustEmbedUnimplementedStudentServiceServer()
 }
 
@@ -182,6 +242,21 @@ func (UnimplementedStudentServiceServer) InsertAddress(context.Context, *InsertA
 }
 func (UnimplementedStudentServiceServer) GetStudentProfileById(context.Context, *GetStudentProfileByIdRequest) (*GetStudentProfileByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStudentProfileById not implemented")
+}
+func (UnimplementedStudentServiceServer) GetDistrictList(context.Context, *GetDistrictListRequest) (*GetDistrictListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDistrictList not implemented")
+}
+func (UnimplementedStudentServiceServer) GetUpazillaListByDistrictId(context.Context, *GetUpazillaListByDistrictIdRequest) (*GetUpazillaListByDistrictIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUpazillaListByDistrictId not implemented")
+}
+func (UnimplementedStudentServiceServer) GetUnionListByUpazillaId(context.Context, *GetUnionListByUpazillaIdRequest) (*GetUnionListByUpazillaIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnionListByUpazillaId not implemented")
+}
+func (UnimplementedStudentServiceServer) GetVillageOrRoadListByUnionId(context.Context, *GetVillageOrRoadListByUnionIdRequest) (*GetVillageOrRoadListByUnionIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVillageOrRoadListByUnionId not implemented")
+}
+func (UnimplementedStudentServiceServer) SearchStudent(context.Context, *SearchStudentRequest) (*SearchStudentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchStudent not implemented")
 }
 func (UnimplementedStudentServiceServer) mustEmbedUnimplementedStudentServiceServer() {}
 
@@ -358,6 +433,96 @@ func _StudentService_GetStudentProfileById_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StudentService_GetDistrictList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDistrictListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentServiceServer).GetDistrictList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentService_GetDistrictList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentServiceServer).GetDistrictList(ctx, req.(*GetDistrictListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudentService_GetUpazillaListByDistrictId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUpazillaListByDistrictIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentServiceServer).GetUpazillaListByDistrictId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentService_GetUpazillaListByDistrictId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentServiceServer).GetUpazillaListByDistrictId(ctx, req.(*GetUpazillaListByDistrictIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudentService_GetUnionListByUpazillaId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUnionListByUpazillaIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentServiceServer).GetUnionListByUpazillaId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentService_GetUnionListByUpazillaId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentServiceServer).GetUnionListByUpazillaId(ctx, req.(*GetUnionListByUpazillaIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudentService_GetVillageOrRoadListByUnionId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVillageOrRoadListByUnionIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentServiceServer).GetVillageOrRoadListByUnionId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentService_GetVillageOrRoadListByUnionId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentServiceServer).GetVillageOrRoadListByUnionId(ctx, req.(*GetVillageOrRoadListByUnionIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudentService_SearchStudent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchStudentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentServiceServer).SearchStudent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentService_SearchStudent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentServiceServer).SearchStudent(ctx, req.(*SearchStudentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StudentService_ServiceDesc is the grpc.ServiceDesc for StudentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -400,6 +565,26 @@ var StudentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetStudentProfileById",
 			Handler:    _StudentService_GetStudentProfileById_Handler,
+		},
+		{
+			MethodName: "GetDistrictList",
+			Handler:    _StudentService_GetDistrictList_Handler,
+		},
+		{
+			MethodName: "GetUpazillaListByDistrictId",
+			Handler:    _StudentService_GetUpazillaListByDistrictId_Handler,
+		},
+		{
+			MethodName: "GetUnionListByUpazillaId",
+			Handler:    _StudentService_GetUnionListByUpazillaId_Handler,
+		},
+		{
+			MethodName: "GetVillageOrRoadListByUnionId",
+			Handler:    _StudentService_GetVillageOrRoadListByUnionId_Handler,
+		},
+		{
+			MethodName: "SearchStudent",
+			Handler:    _StudentService_SearchStudent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

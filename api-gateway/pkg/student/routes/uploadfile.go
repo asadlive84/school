@@ -18,20 +18,6 @@ import (
 	// "github.com/golang/protobuf/ptypes/timestamp"
 )
 
-// type InsertRequestBody struct {
-// 	Id           string               `json:"id,omitempty"`
-// 	Name         string               `json:"name,omitempty"`
-// 	NameBn       string               `json:"name_bn,omitempty"`
-// 	FathersName  string               `json:"fathers_name,omitempty"`
-// 	MothersName  string               `json:"mothers_name,omitempty"`
-// 	Session      string               `json:"session,omitempty"`
-// 	Gender       string               `json:"gender,omitempty"`
-// 	MobileNumber string               `json:"mobile_number,omitempty"`
-// 	ClassName    string               `json:"class_name,omitempty"`
-// 	StdId        string               `json:"stdId,omitempty"`
-// 	Dob          *timestamp.Timestamp `json:"dob,omitempty"`
-// }
-
 func UploadFile(ctx *gin.Context, d pb.StudentServiceClient) {
 	// Retrieve the uploaded file from the request
 
@@ -142,6 +128,22 @@ func processData(sessionYear string, headers []string, values [][]string, d pb.S
 
 		addressInfo := strings.Split(row[14], ",")
 
+		district := strings.TrimRight(strings.TrimLeft(addressInfo[3], " "), " ")
+		district = strings.ReplaceAll(district, " ", "")
+		district = strings.ReplaceAll(district, ".", "")
+
+		upzilla := strings.TrimRight(strings.TrimLeft(addressInfo[2], " "), " ")
+		upzilla = strings.ReplaceAll(upzilla, " ", "")
+		upzilla = strings.ReplaceAll(upzilla, ".", "")
+
+		unionName := strings.TrimRight(strings.TrimLeft(addressInfo[1], " "), " ")
+		unionName = strings.ReplaceAll(unionName, " ", "")
+		unionName = strings.ReplaceAll(unionName, ".", "")
+
+		villageOrRoad := strings.TrimRight(strings.TrimLeft(addressInfo[0], " "), " ")
+		villageOrRoad = strings.ReplaceAll(villageOrRoad, " ", "")
+		villageOrRoad = strings.ReplaceAll(villageOrRoad, ".", "")
+
 		std := &pb.Student{
 			Id:            "",
 			StdId:         strings.TrimRight(strings.TrimLeft(row[0], " "), " "),
@@ -160,10 +162,11 @@ func processData(sessionYear string, headers []string, values [][]string, d pb.S
 			ClassRoll:     "",
 			Address:       strings.TrimRight(strings.TrimLeft(row[14], " "), " "),
 			Religion:      religion,
-			District:      strings.TrimRight(strings.TrimLeft(addressInfo[3], " "), " "),
-			Upzilla:       strings.TrimRight(strings.TrimLeft(addressInfo[2], " "), " "),
-			UnionName:     strings.TrimRight(strings.TrimLeft(addressInfo[1], " "), " "),
-			VillageOrRoad: strings.TrimRight(strings.TrimLeft(addressInfo[0], " "), " "),
+			District:      strings.ToLower(district),
+			Upzilla:       strings.ToLower(upzilla),
+			UnionName:     strings.ToLower(unionName),
+			VillageOrRoad: strings.ToLower(villageOrRoad),
+			
 		}
 
 		ctx := context.Background()

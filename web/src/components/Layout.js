@@ -21,7 +21,7 @@ const Layout = () => {
               <Link to="/stdlistsessionid">StudentListBySessionId</Link>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/Search">Search</Link>
             </li>
             <li>
               <Link to="/student/6d1dcbb7-e472-4b46-8748-2d291e7f6f51/profile">Profile</Link>
